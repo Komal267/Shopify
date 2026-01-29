@@ -3,13 +3,14 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Button from "./Button/Button";
-
+import {selectCartQuantity} from "../redux/selectors/cartSelectors"
 import MenuView from "./View/Desktop";
 
-const Navbar = () => {
-const { quantity } = useSelector((state) => state.cart);
 
-  
+const Navbar = () => {
+const  quantity  = useSelector(selectCartQuantity);
+
+  const noop = () => {};
   const [isOpen, setIsOpen] = useState(false);
 
   const handleClose = (newValue)=>{
@@ -35,16 +36,17 @@ const { quantity } = useSelector((state) => state.cart);
             Shopify
           </h2>
         </Link>
-         {/* Desktop menu */}
-        <MenuView array ={menuItems} className="hidden sm:flex items-center ml-auto"/>
+        <div className="ml-auto flex justify-between items-center"  >
+          {/* Desktop menu */}
+          <MenuView array ={menuItems} className="hidden sm:flex items-center " onBtnClick={()=> noop()}/>
 
-        <Button
-          onClick={() => setIsOpen(!isOpen)}
-          className="sm:hidden"
-        >
-          <GiHamburgerMenu />
-        </Button>
-
+          <Button
+            onClick={() => setIsOpen(!isOpen)}
+            className="sm:hidden"
+          >
+            <GiHamburgerMenu />
+          </Button>
+        </div>
        
       </div>
 

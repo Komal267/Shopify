@@ -1,11 +1,14 @@
 import React, { useContext } from "react";
-import { ShopContext } from "./context/ShopContext";
 import { Link } from "react-router-dom";
 import { MdCurrencyRupee } from "react-icons/md";
 import Button from "./Button/Button";
+import {useCartActions} from "../hooks/useCartActions";
+import { selectProduct } from "../redux/selectors/cartSelectors";
+import { useSelector } from "react-redux";
 
 const ProductList = () => {
-  const { products,addToCart } = useContext(ShopContext);
+  const products = useSelector(selectProduct);
+  const {add} = useCartActions();
   return (
     <div className="max-w-300 mx-auto px-4 mt-20 text-center">
       <h2 className="text-2xl font-semibold mb-8 text-gray-800">Our Elegant Collection</h2>
@@ -21,7 +24,7 @@ const ProductList = () => {
                 <h3 className="text-md font-medium text-gray-800 mb-1">{title}</h3>
                 <p className="text-gray-500 font-bold text-center flex justify-center items-center"><MdCurrencyRupee/>{price}</p>
               </div>
-              <Button onClick={()=>addToCart(product,id)} className="w-full mt-4 py-2 border border-sky-400 text-black rounded-md hover:bg-sky-800 transition duration-200n  ">Add to Cart</Button>
+              <Button onClick={()=>add(product,product.id)} className="w-full mt-4 py-2 border border-sky-400 text-black rounded-md hover:bg-sky-800 transition duration-200n  ">Add to Cart</Button>
             </div>
           );
         })}
